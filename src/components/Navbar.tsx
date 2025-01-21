@@ -1,30 +1,39 @@
-import Link from 'next/link';
+'use client';
+import React, { useState } from "react";
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   return (
-    <nav className="fixed top-0 left-0 w-full bg-primary text-white shadow-md z-10">
-      <div className="max-w-7xl mx-auto px-4 py-2">
-        <div className="flex justify-between items-center">
-          <div className="text-xl font-bold">RetroCorp</div>
-          <ul className="hidden md:flex space-x-4">
-            <li>
-              <Link href="/">Home</Link>
-            </li>
-            <li>
-              <Link href="/about">About</Link>
-            </li>
-            <li>
-              <Link href="/services">Services</Link>
-            </li>
-            <li>
-              <Link href="/contact">Contact</Link>
-            </li>
-          </ul>
-          <button className="md:hidden btn btn-square">
-            <span className="material-icons">menu</span>
-          </button>
-        </div>
+    <nav className="bg-primary text-white">
+      <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
+        <div className="text-2xl font-bold">Logo</div>
+
+        {/* Menu Desktop */}
+        <ul className="hidden md:flex space-x-6">
+          <li><a href="#home" className="hover:text-accent">Home</a></li>
+          <li><a href="#heroes" className="hover:text-accent">Heroes</a></li>
+          <li><a href="#footer" className="hover:text-accent">Footer</a></li>
+        </ul>
+
+        {/* Menu Hamburger (Mobile) */}
+        <button className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
       </div>
+
+      {/* Menu Mobile */}
+      {isMenuOpen && (
+        <div className="md:hidden bg-primary p-4">
+          <ul>
+            <li><a href="#home" className="block py-2 hover:text-accent">Home</a></li>
+            <li><a href="#heroes" className="block py-2 hover:text-accent">Heroes</a></li>
+            <li><a href="#footer" className="block py-2 hover:text-accent">Footer</a></li>
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };
