@@ -3,12 +3,12 @@ frontend:
   phases:
     preBuild:
       commands:
-        - npm install
+        - npm ci # ou npm install, caso o ci não esteja disponível
     build:
       commands:
         - npm run build
   artifacts:
-    baseDirectory: out
+    baseDirectory: out # Certifique-se de usar a pasta correta de saída do Next.js
     files:
       - '**/*'
   cache:
