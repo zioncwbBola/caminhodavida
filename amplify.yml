@@ -1,17 +1,19 @@
 version: 1
-frontend:
-  phases:
-    preBuild:
-      commands:
-        - npm ci # ou npm install, caso o ci não esteja disponível
-    build:
-      commands:
-        - npm run build
-  artifacts:
-    baseDirectory: out # Certifique-se de usar a pasta correta de saída do Next.js
-    files:
-      - '**/*'
-  cache:
-    paths:
-      - node_modules/**/*
+applications:
+  - appRoot: .
+    frontend:
+      phases:
+        preBuild:
+          commands:
+            - npm install
+        build:
+          commands:
+            - npm run build
+      artifacts:
+        baseDirectory: .next
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
 
