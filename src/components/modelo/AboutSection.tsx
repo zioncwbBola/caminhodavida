@@ -1,7 +1,7 @@
 // components/AboutSection.tsx
 const AboutSection = () => {
   return (
-    <section className="py-12 bg-white">
+    <section className="bg-base-200 py-12 bg-white">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold">Sobre Nós</h2>
         <p className="text-lg mt-4">

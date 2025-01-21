@@ -12,6 +12,7 @@ module.exports = {
       'dark',
       'retro',
       'corporate',
-    ]
+    ],
+    base: true,
   }
 }

@@ -8,7 +8,7 @@ import Banner from '@/components/modelo/Banner';
 
 const HomePage = () => {
   return (
-    <div className="relative">
+    <div className="relative bg-base-100">
       <Hero />
       <AboutSection />
       <ServicesSection />
