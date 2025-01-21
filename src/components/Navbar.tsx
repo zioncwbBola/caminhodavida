@@ -7,13 +7,17 @@ const Navbar = () => {
   return (
     <nav className="bg-primary text-white">
       <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
-        <div className="text-2xl font-bold">Logo</div>
+        <div className="text-2xl font-bold">Caminho da Vida</div>
 
         {/* Menu Desktop */}
         <ul className="hidden md:flex space-x-6">
-          <li><a href="#home" className="hover:text-accent">Home</a></li>
-          <li><a href="#heroes" className="hover:text-accent">Heroes</a></li>
-          <li><a href="#footer" className="hover:text-accent">Footer</a></li>
+          <li><a href="/" className="hover:text-accent">Inicio</a></li>
+          <li><a href="/about" className="hover:text-accent">Somos Igreja</a></li>
+          <li><a href="/events" className="hover:text-accent">Programação</a></li>
+          <li><a href="/ministerios" className="hover:text-accent">Ministerios</a></li>
+          <li><a href="/apoio" className="hover:text-accent">Orações e Ajuda</a></li>
+          <li><a href="/join" className="hover:text-accent">Faça parte</a></li>
+          <li><a href="/contact" className="hover:text-accent">Fale Conosco</a></li>
         </ul>
 
         {/* Menu Hamburger (Mobile) */}
