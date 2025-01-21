@@ -1,20 +1,16 @@
 import Image from 'next/image';
+
 const Hero = () => {
   return (
-    // <section id="heroes" className="bg-gray-100 h-96 flex items-center justify-center text-center">
-    //   <div className="text-4xl font-bold">Welcome to the Heroes Page!</div>
-    // </section>
-    <div
-      className="hero min-h-screen"
-      style={{
-      position: 'relative',
-      }}>
+    <div className="w-full hero min-h-[300px]" style={{ position: 'relative' }}>
       <Image
         src="/01.jpg"
         alt="Hero Background"
-        layout="fill"
-        objectFit="cover"
-        quality={100}
+        layout="responsive" // Faz a imagem ser responsiva
+        width={1920}  // Largura de referência
+        height={1080} // Altura de referência
+        objectFit="cover" // Faz a imagem cobrir todo o espaço disponível
+        quality={100} 
       />
     </div>
   );
