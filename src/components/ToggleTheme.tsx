@@ -6,7 +6,7 @@ const ToggleTheme = () => {
   const [theme, setTheme] = useState<string>("corporate");
 
   const handleToggleTheme = () => {
-    const themes = ["retro", "corporate", "black"];
+    const themes = ["retro", "corporate", "dark"];
     const currentThemeIndex = themes.indexOf(theme);
     const nextThemeIndex = (currentThemeIndex + 1) % themes.length;
     const nextTheme = themes[nextThemeIndex];
@@ -18,7 +18,7 @@ const ToggleTheme = () => {
   return (
     <button
       onClick={handleToggleTheme}
-      className="fixed bottom-5 right-5 p-4 bg-primary text-white rounded-full shadow-lg transition duration-300 ease-in-out transform hover:scale-105"
+      className="fixed bottom-5 right-5 p-4 bg-primary text-white rounded-full shadow-lg z-50 transition duration-300 ease-in-out transform hover:scale-105"
     >
       <span>🌗</span>
     </button>
