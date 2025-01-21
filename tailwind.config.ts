@@ -1,3 +1,4 @@
+// tailwind.config.ts
 import type { Config } from "tailwindcss";
 
 export default {
@@ -12,5 +13,5 @@ export default {
   plugins: [require('daisyui')],
   daisyui: {
     themes: ['retro', 'corporate', 'black'],
-  }
+  },
 } satisfies Config;

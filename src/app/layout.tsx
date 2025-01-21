@@ -1,21 +1,17 @@
-export const metadata = {
-  title: 'Minha Aplicação',
-  description: 'Descrição genérica da aplicação',
-};
+// app/layout.tsx
+import { ReactNode } from 'react';
+import '../styles/globals.css';
+import ThemeToggle from '@/components/ToggleTheme'; 
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-BR">
+    <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+      </head>
       <body>
-        <header>
-          <nav>Navbar genérica</nav>
-        </header>
-        <main>{children}</main>
-        <footer>Rodapé genérico</footer>
+        <ThemeToggle />
+        {children}
       </body>
     </html>
   );

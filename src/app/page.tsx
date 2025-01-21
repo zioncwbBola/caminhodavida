@@ -1,12 +1,18 @@
-export default async function Home() {
-  // const data = await fetch('https://api.example.com/data', {
-  //   cache: 'force-cache', // Garante que os dados são estáticos
-  // }).then((res) => res.json());
+// app/page.tsx
+import Navbar from '../components/Navbar';
+import Hero from '../components/Hero';
+import Sidebar from '../components/Sidebar';
+import Footer from '../components/Footer';
 
+const HomePage = () => {
   return (
-    <main>
-      <h1>Bem-vindo!</h1>
-      {/* <p>Dados estáticos: {JSON.stringify(data)}</p> */}
-    </main>
+    <div className="relative">
+      <Navbar />
+      <Sidebar />
+      <Hero />
+      <Footer />
+    </div>
   );
-}
+};
+
+export default HomePage;
