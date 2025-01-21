@@ -1,6 +1,6 @@
 // app/layout.tsx
 import { ReactNode } from 'react';
-import '../styles/globals.css';
+import '@/app/styles/globals.css';
 import ThemeToggle from '@/components/ToggleTheme';
 import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
