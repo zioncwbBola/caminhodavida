@@ -6,7 +6,6 @@ import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import Navbar from '@/components/Navbar';
 import { Metadata, Viewport } from 'next';
-
 export const metadata: Metadata = {
   title: 'Caminho da Vida',
   description: 'Bem-vindo ao Caminho da Vida',
@@ -18,6 +17,14 @@ export const metadata: Metadata = {
     title: 'Caminho da Vida',
     description: 'Bem-vindo ao Caminho da Vida',
     url: 'https://caminhodavida.vercel.app/',
+    images: [
+      {
+        url: '/logo.jpg',
+        width: 800,
+        height: 600,
+        alt: 'Caminho da Vida Logo',
+      },
+    ],
   },
 };
 
