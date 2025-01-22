@@ -3,6 +3,10 @@ const MinistriesSection = () => {
     <section className="py-20 bg-base-200" role="ministerios">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold text-base-content">Qual nosso propósito como Igreja?</h2>
+        <p>
+          Não fiquem irritados uns com os outros e perdoem uns aos outros, caso alguém tenha alguma queixa contra outra pessoa. Assim como o Senhor perdoou vocês, perdoem uns aos outros.
+        </p>
+        <p>Colossenses 3:13 - Nova Tradução na Linguagem de Hoje</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">
           <div className="bg-base-100 p-6 rounded-lg shadow-xl">
             <h3 className="text-2xl font-semibold text-base-content">Autoconhecimento emocional</h3>
