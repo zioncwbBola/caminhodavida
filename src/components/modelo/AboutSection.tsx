@@ -1,9 +1,9 @@
 // components/AboutSection.tsx
 const AboutSection = () => {
   return (
-    <section className="bg-base-200 py-12 bg-white">
-      <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-semibold">Sobre Nós</h2>
+    <section className="py-12 bg-white">
+      <div className="bg-base-100 p-10 container mx-auto text-center">
+        <h2 className="text-4xl font-semibold">Comunidade Cristã Caminho da Vida</h2>
         <p className="text-lg mt-4">
           Somos uma comunidade unida em Cristo, com a missão de espalhar o amor de Deus.
         </p>
