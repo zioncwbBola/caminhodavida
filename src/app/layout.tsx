@@ -13,6 +13,12 @@ export const metadata: Metadata = {
   keywords: ['Caminho da Vida', 'chat', 'comunidade'],
   authors: [{ name: 'Seu Nome' }],
   robots: 'index, follow',
+  openGraph: {
+    siteName: 'Caminho da Vida',
+    title: 'Caminho da Vida',
+    description: 'Bem-vindo ao Caminho da Vida',
+    url: 'https://caminhodavida.vercel.app/',
+  },
 };
 
 export const viewport: Viewport = {
