@@ -8,7 +8,7 @@ import Navbar from '@/components/Navbar';
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-br" data-theme="dark">
+    <html lang="pt-br" data-theme="">
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </head>
