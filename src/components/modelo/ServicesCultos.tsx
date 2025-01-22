@@ -1,6 +1,6 @@
 const ServicesSection = () => {
   return (
-    <section className="py-12 bg-base-300">
+    <section className="py-12 bg-base-300" role="events">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold text-base-content">Programação Semanal</h2>
         <p className="text-lg mt-2 text-base-content">

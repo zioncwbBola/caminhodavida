@@ -1,6 +1,6 @@
 const MinistriesSection = () => {
   return (
-    <section className="py-20 bg-base-200">
+    <section className="py-20 bg-base-200" role="ministerios">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold text-base-content">Qual nosso propósito como Igreja?</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-6">

@@ -1,7 +1,7 @@
 // components/Footer.tsx
 const Footer = () => {
   return (
-    <footer className="bg-primary text-white py-6">
+    <footer className="bg-primary text-white py-6" role="footer">
       <div className="container mx-auto text-center">
         <p>&copy; 2025 Igreja. Todos os direitos reservados.</p>
         <div className="mt-4">

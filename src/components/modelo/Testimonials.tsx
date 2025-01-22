@@ -1,7 +1,7 @@
 // components/Testimonials.tsx
 const Testimonials = () => {
   return (
-    <section className="py-12 bg-gray-100">
+    <section className="py-12 bg-gray-100" role="testemunhos">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold">O Que Dizem Nossos Membros</h2>
         <div className="mt-6 space-y-6">

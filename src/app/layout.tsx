@@ -22,13 +22,12 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="pt-br" data-theme="">
+    <html lang="pt-br" data-theme="dark">
       <head>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
       </head>
       <body>
         <ThemeToggle />
-        <Sidebar />
         <Navbar />
         {children}
         <Footer />
