@@ -60,7 +60,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <ThemeToggle />
         <Navbar />
-        {children}
+        <main>{children}</main>
         <Footer />
         <Analytics />
         <SpeedInsights />
