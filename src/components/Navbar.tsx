@@ -8,7 +8,7 @@ const Navbar = () => {
     <nav className="bg-primary text-white sticky top-0 z-50">
       <div className="max-w-screen-xl mx-auto px-4 py-4 flex justify-between items-center">
         {/* Logo */}
-        <div className="text-2xl font-bold">Caminho da Vida</div>
+        <div className="text-2xl font-bold"><a href="/"> Caminho da Vida</a></div>
 
         {/* Menu Comum (Desktop e Mobile) */}
         <ul
@@ -17,12 +17,12 @@ const Navbar = () => {
           }`}
         >
           <li><a href="/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Inicio</a></li>
-          <li><a href="/about" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Somos Igreja</a></li>
-          <li><a href="/events" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Programação</a></li>
-          <li><a href="/ministerios" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Ministérios</a></li>
-          <li><a href="/apoio" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Orações e Ajuda</a></li>
-          <li><a href="/join" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Faça Parte</a></li>
-          <li><a href="/contact" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Fale Conosco</a></li>
+          <li><a href="/about/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Somos Igreja</a></li>
+          <li><a href="/events/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Programação</a></li>
+          <li><a href="/ministerios/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Ministérios</a></li>
+          <li><a href="/apoio/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Orações e Ajuda</a></li>
+          <li><a href="/join/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Faça Parte</a></li>
+          <li><a href="/contact/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Fale Conosco</a></li>
         </ul>
 
         {/* Botão Hamburger para Mobile */}

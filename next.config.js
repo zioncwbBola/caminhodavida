@@ -23,6 +23,14 @@ const nextConfig = {
       },
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: '/:path*',
+        destination: '/404',  // Exemplo de reescrita
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;
