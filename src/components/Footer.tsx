@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from "next/image";
 const Footer = () => {
   return (
     <footer className="footer bg-neutral text-white p-10">
@@ -8,7 +8,10 @@ const Footer = () => {
           alt="Brand Logo"
           width={100}
           height={100}
-        />
+          style={{
+            maxWidth: "100%",
+            height: "auto"
+          }} />
         <p className="text-base-content text-white font-bold">
           Caminho da Vida
           <br />
