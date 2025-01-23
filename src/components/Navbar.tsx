@@ -16,13 +16,13 @@ const Navbar = () => {
             isMenuOpen ? "block" : "hidden lg:flex"
           }`}
         >
-          <li><a href="/" className="hover:text-accent">Inicio</a></li>
-          <li><a href="/about" className="hover:text-accent">Somos Igreja</a></li>
-          <li><a href="/events" className="hover:text-accent">Programação</a></li>
-          <li><a href="/ministerios" className="hover:text-accent">Ministérios</a></li>
-          <li><a href="/apoio" className="hover:text-accent">Orações e Ajuda</a></li>
-          <li><a href="/join" className="hover:text-accent">Faça Parte</a></li>
-          <li><a href="/contact" className="hover:text-accent">Fale Conosco</a></li>
+          <li><a href="/" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Inicio</a></li>
+          <li><a href="/about" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Somos Igreja</a></li>
+          <li><a href="/events" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Programação</a></li>
+          <li><a href="/ministerios" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Ministérios</a></li>
+          <li><a href="/apoio" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Orações e Ajuda</a></li>
+          <li><a href="/join" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Faça Parte</a></li>
+          <li><a href="/contact" className="hover:text-accent hover:border-b-2 border-accent transition-all duration-300">Fale Conosco</a></li>
         </ul>
 
         {/* Botão Hamburger para Mobile */}

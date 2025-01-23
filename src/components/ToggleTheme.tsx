@@ -6,7 +6,7 @@ const ToggleTheme = () => {
   const [theme, setTheme] = useState<string>("corporate");
 
   const handleToggleTheme = () => {
-    const themes = ["zion", "retro", "corporate", "dark"];
+    const themes = [ "retro", "corporate", "dark"];
     const currentThemeIndex = themes.indexOf(theme);
     const nextThemeIndex = (currentThemeIndex + 1) % themes.length;
     const nextTheme = themes[nextThemeIndex];
