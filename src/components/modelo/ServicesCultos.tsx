@@ -1,6 +1,9 @@
+import Image from "next/image";
+import styles from '@/styles/ServicesCultos.module.css';
+
 const ServicesSection = () => {
   return (
-    <section className="py-12 bg-base-300" role="events">
+    <section className={`py-12 bg-base-300 ${styles.backgroundImage}`} role="events">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-semibold text-base-content">Programação Semanal</h2>
         <p className="text-lg mt-2 text-base-content">

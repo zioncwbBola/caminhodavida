@@ -1,7 +1,19 @@
+import Image from "next/image";
 const AboutSection = () => {
   return (
-    <section className="py-12 bg-base-200" role="about">
-      <div className="bg-base-100 p-10 container mx-auto text-center">
+    <section className="py-12 bg-base-200 relative" role="about">
+      <div className="absolute inset-0">
+        <Image
+          src="/bg/about.png"
+          alt="Hero Background"
+          layout="fill"
+          objectFit="cover"
+          quality={100}
+          priority={true}
+          className="z-0"
+        />
+      </div>
+      <div className="relative bg-base-100 p-10 container mx-auto text-center z-10">
         <h2 className="text-4xl font-semibold text-base-content">
           Comunidade Cristã Caminho da Vida
         </h2>
