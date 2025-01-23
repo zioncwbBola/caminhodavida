@@ -6,6 +6,8 @@ import Footer from '@/components/Footer';
 import Sidebar from '@/components/Sidebar';
 import Navbar from '@/components/Navbar';
 import { Metadata, Viewport} from 'next';
+import { Analytics } from '@vercel/analytics/next';
+
 
 
 export const metadata: Metadata = {
@@ -56,6 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <Navbar />
         {children}
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
