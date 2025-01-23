@@ -5,6 +5,20 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  headers: async () => {
+    return [
+      {
+        // Adiciona o cabeçalho X-Content-Type-Options
+        source: '/:path*',
+        headers: [
+          {
+            key: 'X-Content-Type-Options',
+            value: 'nosniff',
+          },
+        ],
+      },
+    ]
+  },
 };
 
 module.exports = nextConfig;
