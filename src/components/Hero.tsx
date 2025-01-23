@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import Image from "next/legacy/image";
 
 const Hero = () => {
   const Salvation = 'Compartilhar a mensagem de salvação de Jesus Cristo com todos.';
