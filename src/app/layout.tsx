@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     url: 'https://caminhodavida.vercel.app/',
     images: [
       {
-        url: '/logo.jpg',
+        url: '/brand/300px.png',
         width: 800,
         height: 600,
         alt: 'Caminho da Vida Logo',
