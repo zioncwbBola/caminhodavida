@@ -1,101 +1,257 @@
-"use client";
+// // pages/events.tsx
+// "use client";
+
+// import { useState, useEffect } from "react";
+
+// interface Event {
+//   id: number;
+//   date: string; // formato: YYYY-MM-DD
+//   time: string; // formato: HH:mm
+//   description: string;
+// }
+
+// export default function EventsPage() {
+//   const [events, setEvents] = useState<Event[]>([]);
+//   const [formData, setFormData] = useState<Omit<Event, "id">>({
+//     date: "",
+//     time: "",
+//     description: "",
+//   });
+//   const [editingId, setEditingId] = useState<number | null>(null);
+//   const [loading, setLoading] = useState<boolean>(true);
+//   const [error, setError] = useState<string | null>(null);
+//   const [success, setSuccess] = useState<string | null>(null);
+
+//   // Load events on page load
+//   useEffect(() => {
+//     const fetchEvents = async () => {
+//       try {
+//         const res = await fetch("/api/events");
+//         if (res.ok) {
+//           const data = await res.json();
+//           setEvents(data);
+//         } else {
+//           setError("Erro ao carregar eventos.");
+//         }
+//       } catch (err) {
+//         setError("Erro ao carregar eventos.");
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+//     fetchEvents();
+//   }, []);
+
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+//     const { name, value } = e.target;
+//     setFormData({ ...formData, [name]: value });
+//   };
+
+//   const handleSubmit = async (e: React.FormEvent) => {
+//     e.preventDefault();
+
+//     if (!formData.date || !formData.time || !formData.description) {
+//       setError("Todos os campos são obrigatórios.");
+//       return;
+//     }
+
+//     const method = editingId ? "PUT" : "POST";
+//     const body = JSON.stringify({
+//       ...formData,
+//       ...(editingId ? { id: editingId } : {}),
+//     });
+
+//     try {
+//       const res = await fetch("/api/events", {
+//         method,
+//         headers: { "Content-Type": "application/json" },
+//         body,
+//       });
+
+//       if (res.ok) {
+//         const updatedEvents = await res.json();
+//         setEvents(updatedEvents);
+//         setFormData({ date: "", time: "", description: "" });
+//         setEditingId(null);
+//         setSuccess("Evento salvo com sucesso!");
+//       } else {
+//         const errorText = await res.text();
+//         setError(`Erro ao salvar evento: ${errorText}`);
+//       }
+//     } catch (err) {
+//       setError("Erro ao salvar evento.");
+//     }
+//   };
+
+//   const handleEdit = (id: number) => {
+//     const eventToEdit = events.find((event) => event.id === id);
+//     if (eventToEdit) {
+//       setFormData({
+//         date: eventToEdit.date,
+//         time: eventToEdit.time,
+//         description: eventToEdit.description,
+//       });
+//       setEditingId(id);
+//     }
+//   };
+
+//   const handleDelete = async (id: number) => {
+//     try {
+//       const res = await fetch("/api/events", {
+//         method: "DELETE",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({ deleteId: id }),
+//       });
+
+//       if (res.ok) {
+//         setEvents((prev) => prev.filter((event) => event.id !== id));
+//         setSuccess("Evento excluído com sucesso!");
+//       } else {
+//         const errorText = await res.text();
+//         setError(`Erro ao excluir evento: ${errorText}`);
+//       }
+//     } catch (err) {
+//       setError("Erro ao excluir evento.");
+//     }
+//   };
+
+//   if (loading) {
+//     return <p>Carregando eventos...</p>;
+//   }
+
+//   return (
+//     <div className="p-4">
+//       <h1 className="text-2xl font-bold mb-4">Cadastro de Eventos</h1>
+
+//       {error && <div className="text-red-500 mb-4">{error}</div>}
+//       {success && <div className="text-green-500 mb-4">{success}</div>}
+
+//       <form onSubmit={handleSubmit} className="space-y-4 bg-base-200 p-4 rounded-md">
+//         <div>
+//           <label className="label">Data</label>
+//           <input
+//             type="date"
+//             name="date"
+//             value={formData.date}
+//             onChange={handleChange}
+//             className="input input-bordered w-full"
+//             required
+//           />
+//         </div>
+//         <div>
+//           <label className="label">Hora</label>
+//           <input
+//             type="time"
+//             name="time"
+//             value={formData.time}
+//             onChange={handleChange}
+//             className="input input-bordered w-full"
+//             required
+//           />
+//         </div>
+//         <div>
+//           <label className="label">Descrição</label>
+//           <textarea
+//             name="description"
+//             value={formData.description}
+//             onChange={handleChange}
+//             className="textarea textarea-bordered w-full"
+//             required
+//           />
+//         </div>
+//         <button type="submit" className="btn btn-primary">
+//           {editingId !== null ? "Salvar Alterações" : "Cadastrar Evento"}
+//         </button>
+//       </form>
+
+//       <h2 className="text-xl font-bold mt-8">Eventos Cadastrados</h2>
+//       {events.length > 0 ? (
+//         <ul className="space-y-2">
+//           {events.map((event) => (
+//             <li key={event.id} className="border rounded-md p-4 bg-base-100 flex justify-between items-start">
+//               <div>
+//                 <p><strong>Data:</strong> {event.date}</p>
+//                 <p><strong>Hora:</strong> {event.time}</p>
+//                 <p><strong>Descrição:</strong> {event.description}</p>
+//               </div>
+//               <div className="flex gap-2">
+//                 <button onClick={() => handleEdit(event.id)} className="btn btn-sm btn-secondary">
+//                   Editar
+//                 </button>
+//                 <button onClick={() => handleDelete(event.id)} className="btn btn-sm btn-error">
+//                   Excluir
+//                 </button>
+//               </div>
+//             </li>
+//           ))}
+//         </ul>
+//       ) : (
+//         <p className="text-gray-500">Nenhum evento cadastrado.</p>
+//       )}
+//     </div>
+//   );
+// }
+// Example of fetching from the API in a React component
+// import { useEffect, useState } from "react";
+
+// const EventsPage = () => {
+//   const [events, setEvents] = useState<any[]>([]);
+
+//   useEffect(() => {
+//     const fetchEvents = async () => {
+//       const response = await fetch("/api/events");
+//       const data = await response.json();
+//       setEvents(data);
+//     };
+
+//     fetchEvents();
+//   }, []);
+
+//   return (
+//     <div>
+//       <h1>Events</h1>
+//       <ul>
+//         {events.map((event) => (
+//           <li key={event.id}>
+//             {event.date} - {event.time}: {event.description}
+//           </li>
+//         ))}
+//       </ul>
+//     </div>
+//   );
+// };
+
+// export default EventsPage;
+// Add this at the top of your `page.tsx` file
+"use client";  // This makes it a client component
 
 import { useEffect, useState } from "react";
 
-interface Event {
-  id: number;
-  date: string; // formato: YYYY-MM-DD
-  time: string; // formato: HH:mm
-  description: string;
-}
-
-function formatDate(dateString: string): string {
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  return new Date(dateString).toLocaleDateString("pt-BR", options);
-}
-
-export default function EventsPage() {
-  const [events, setEvents] = useState<Event[]>([]);
-  const [eventsThisWeek, setEventsThisWeek] = useState<Event[]>([]);
-  const [eventsByMonth, setEventsByMonth] = useState<Record<string, Event[]>>({});
+const EventsPage = () => {
+  const [events, setEvents] = useState<any[]>([]);
 
   useEffect(() => {
-    const savedEvents = localStorage.getItem("events");
-    if (savedEvents) {
-      const parsedEvents: Event[] = JSON.parse(savedEvents);
-      setEvents(parsedEvents);
+    const fetchEvents = async () => {
+      const response = await fetch("/api/events");
+      const data = await response.json();
+      setEvents(data);
+    };
 
-      // Filtrar eventos da semana
-      const now = new Date();
-      const weekStart = new Date(now.setDate(now.getDate() - now.getDay() + 1)); // Segunda-feira
-      const weekEnd = new Date(now.setDate(weekStart.getDate() + 6)); // Domingo
-      const eventsThisWeek = parsedEvents.filter((event) => {
-        const eventDate = new Date(event.date);
-        return eventDate >= weekStart && eventDate <= weekEnd;
-      });
-      setEventsThisWeek(eventsThisWeek);
-
-      // Agrupar eventos por mês
-      const groupedByMonth = parsedEvents.reduce((acc, event) => {
-        const month = new Date(event.date).toLocaleString("pt-BR", { month: "long", year: "numeric" });
-        if (!acc[month]) acc[month] = [];
-        acc[month].push(event);
-        return acc;
-      }, {} as Record<string, Event[]>);
-      setEventsByMonth(groupedByMonth);
-    }
+    fetchEvents();
   }, []);
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Eventos</h1>
-
-      {/* Eventos da Semana */}
-      <section>
-        <h2 className="text-xl font-bold mb-4">Eventos da Semana</h2>
-        {eventsThisWeek.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {eventsThisWeek.map((event) => (
-              <div key={event.id} className="card bg-base-100 shadow-md p-4">
-                <h3 className="text-lg font-semibold">{event.description}</h3>
-                <p className="text-sm text-gray-600">📅 {formatDate(event.date)}</p>
-                <p className="text-sm text-gray-600">⏰ {event.time}</p>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">Nenhum evento esta semana.</p>
-        )}
-      </section>
-
-      {/* Eventos por Mês */}
-      <section className="mt-8">
-        <h2 className="text-xl font-bold mb-4">Eventos por Mês</h2>
-        {Object.keys(eventsByMonth).length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {Object.entries(eventsByMonth).map(([month, events]) => (
-              <div key={month} className="card bg-base-200 shadow-md p-4">
-                <h3 className="text-lg font-semibold mb-2">{month}</h3>
-                <ul className="space-y-2">
-                  {events.map((event) => (
-                    <li key={event.id} className="border-b pb-2">
-                      <p><strong>📅 Data:</strong> {formatDate(event.date)}</p>
-                      <p><strong>⏰ Hora:</strong> {event.time}</p>
-                      <p><strong>📖 Descrição:</strong> {event.description}</p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-gray-500">Nenhum evento registrado.</p>
-        )}
-      </section>
+    <div>
+      <h1>Events</h1>
+      <ul>
+        {events.map((event) => (
+          <li key={event.id}>
+            {event.date} - {event.time}: {event.description}
+          </li>
+        ))}
+      </ul>
     </div>
   );
-}
+};
+
+export default EventsPage;

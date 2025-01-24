@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { neon } from '@neondatabase/serverless';
 
 interface Event {
   id: number;
@@ -17,13 +18,30 @@ export default function EventsPage() {
     description: "",
   });
   const [editingId, setEditingId] = useState<number | null>(null);
+  const [error, setError] = useState<string | null>(null); // Para mostrar erros de API
+  const [loading, setLoading] = useState<boolean>(false); // Para controle de loading
 
-  // Carregar eventos do localStorage ao inicializar a página
+  // Carregar eventos do localStorage ou da API ao inicializar a página
   useEffect(() => {
-    const savedEvents = localStorage.getItem("events");
-    if (savedEvents) {
-      setEvents(JSON.parse(savedEvents));
-    }
+    const fetchEvents = async () => {
+      setLoading(true); // Inicia o loading
+      try {
+        const res = await fetch("/api/events");
+        if (res.ok) {
+          const data = await res.json();
+          setEvents(data);
+        } else {
+          const errorText = await res.text();
+          setError(`Erro ao carregar eventos. Status: ${res.status} - ${errorText}`);
+        }
+      } catch (err) {
+        setError("Erro ao carregar eventos da API.");
+        console.error("Erro ao carregar eventos:", err);
+      } finally {
+        setLoading(false); // Finaliza o loading
+      }
+    };
+    fetchEvents();
   }, []);
 
   // Salvar eventos no localStorage sempre que a lista mudar
@@ -38,45 +56,68 @@ export default function EventsPage() {
   };
 
   // Enviar formulário para criar ou editar evento
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (editingId !== null) {
-      // Atualizar evento existente
-      setEvents((prev) =>
-        prev.map((event) =>
-          event.id === editingId ? { ...event, ...formData } : event
-        )
-      );
-      setEditingId(null);
-    } else {
-      // Adicionar novo evento
-      const newEvent: Event = { id: Date.now(), ...formData };
-      setEvents((prev) => [...prev, newEvent]);
+    // Verifique se os dados do formulário são válidos
+    if (!formData.date || !formData.time || !formData.description) {
+      setError("Todos os campos são obrigatórios.");
+      return;
     }
 
-    // Limpar formulário
-    setFormData({ date: "", time: "", description: "" });
+    const sql = neon(`${process.env.DATABASE_URL}`);
+    const query = editingId !== null
+      ? 'UPDATE events SET date = $1, time = $2, description = $3 WHERE id = $4'
+      : 'INSERT INTO events (date, time, description) VALUES ($1, $2, $3)';
+    const params = editingId !== null
+      ? [formData.date, formData.time, formData.description, editingId]
+      : [formData.date, formData.time, formData.description];
+
+    try {
+      await sql(query, params);
+      const updatedEvents = await fetch("/api/events").then((res) => res.json());
+      setEvents(updatedEvents);
+      setEditingId(null);
+      setFormData({ date: "", time: "", description: "" });
+    } catch (err) {
+      setError(`Erro ao salvar evento: ${(err as Error).message || "Unknown error"}`);
+      console.error("Erro ao salvar evento:", err);
+    }
   };
 
   // Editar evento
   const handleEdit = (id: number) => {
     const eventToEdit = events.find((event) => event.id === id);
     if (eventToEdit) {
-      setFormData({ date: eventToEdit.date, time: eventToEdit.time, description: eventToEdit.description });
+      setFormData({
+        date: eventToEdit.date,
+        time: eventToEdit.time,
+        description: eventToEdit.description,
+      });
       setEditingId(id);
     }
   };
 
   // Remover evento
-  const handleDelete = (id: number) => {
-    setEvents((prev) => prev.filter((event) => event.id !== id));
+  const handleDelete = async (id: number) => {
+    try {
+      const sql = neon(`${process.env.DATABASE_URL}`);
+      await sql('DELETE FROM events WHERE id = $1', [id]);
+      setEvents((prev) => prev.filter((event) => event.id !== id));
+    } catch (err) {
+      setError(`Erro ao excluir evento: ${(err as Error).message || "Unknown error"}`);
+      console.error("Erro ao excluir evento:", err);
+    }
   };
 
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Cadastro de Eventos</h1>
 
+      {/* Exibir erro, caso haja */}
+      {error && <div className="text-red-500 mb-4">{error}</div>}
+
+      {/* Formulário de cadastro ou edição de eventos */}
       <form onSubmit={handleSubmit} className="space-y-4 bg-base-200 p-4 rounded-md">
         <div>
           <label className="label">Data</label>
@@ -115,8 +156,11 @@ export default function EventsPage() {
         </button>
       </form>
 
+      {/* Exibir lista de eventos cadastrados */}
       <h2 className="text-xl font-bold mt-8">Eventos Cadastrados</h2>
-      {events.length > 0 ? (
+      {loading ? (
+        <p>Carregando eventos...</p>
+      ) : events.length > 0 ? (
         <ul className="space-y-2">
           {events.map((event) => (
             <li key={event.id} className="border rounded-md p-4 bg-base-100 flex justify-between items-start">
