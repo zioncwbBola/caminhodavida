@@ -7,6 +7,7 @@ import { Metadata } from 'next';
 import Analytics from '@/components/Ads/Analytics';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import ConsentBanner from '@/components/termos/Lgpd';
+import GTag from '@/components/Ads/Gtag';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://caminhodavida.vercel.app/'),
@@ -64,6 +65,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <head>
         {/* Google Analytics */}
         <Analytics />
+        <GTag />
         {/* Google Fonts */}
         <link
           rel="stylesheet"
