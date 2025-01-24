@@ -1,62 +1,61 @@
 // src/app/api/events/route.ts
+import { NextRequest, NextResponse } from 'next/server';
+import { neon } from '@neondatabase/serverless';
 
-import { NextResponse } from 'next/server';
-import { query } from '@/Lib/db'; // Correct path to your database query utility
+const getNeonClient = () => {
+  const databaseUrl = process.env.DATABASE_URL;
+  if (!databaseUrl) {
+    throw new Error("DATABASE_URL não configurado.");
+  }
+  return neon(databaseUrl);
+};
 
+// Lidar com os métodos GET, POST, PUT e DELETE
 export async function GET() {
   try {
-    const events = await query("SELECT * FROM events ORDER BY date, time", []);
-    return NextResponse.json(events);  // Return JSON response
-  } catch (error: any) {
-    console.error("Error fetching events:", error);
-    return NextResponse.error();  // Return error response
+    const client = getNeonClient();
+    const result = await client('SELECT * FROM events ORDER BY date, time');
+    return NextResponse.json(result);
+  } catch (error) {
+    return NextResponse.json({ error: 'Erro ao buscar eventos.' }, { status: 500 });
   }
 }
 
-export async function POST(request: Request) {
+export async function POST(req: NextRequest) {
   try {
-    const { date, time, description } = await request.json();
-
-    if (!date || !time || !description) {
-      return NextResponse.json({ error: "All fields are required" }, { status: 400 });
-    }
-
-    await query("INSERT INTO events (date, time, description) VALUES ($1, $2, $3)", [date, time, description]);
-    return NextResponse.json({ message: "Event created successfully" }, { status: 201 });
-  } catch (error: any) {
-    console.error("Error creating event:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const { date, time, description } = await req.json();
+    const client = getNeonClient();
+    const result = await client(
+      'INSERT INTO events (date, time, description) VALUES ($1, $2, $3) RETURNING *',
+      [date, time, description]
+    );
+    return NextResponse.json(result[0], { status: 201 });
+  } catch (error) {
+    return NextResponse.json({ error: 'Erro ao criar evento.' }, { status: 500 });
   }
 }
 
-export async function PUT(request: Request) {
+export async function PUT(req: NextRequest) {
   try {
-    const { id, date, time, description } = await request.json();
-
-    if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
-
-    await query("UPDATE events SET date = $1, time = $2, description = $3 WHERE id = $4", [date, time, description, id]);
-    return NextResponse.json({ message: "Event updated successfully" });
-  } catch (error: any) {
-    console.error("Error updating event:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const { id, date, time, description } = await req.json();
+    const client = getNeonClient();
+    const result = await client(
+      'UPDATE events SET date = $1, time = $2, description = $3 WHERE id = $4 RETURNING *',
+      [date, time, description, id]
+    );
+    return NextResponse.json(result[0]);
+  } catch (error) {
+    return NextResponse.json({ error: 'Erro ao atualizar evento.' }, { status: 500 });
   }
 }
 
-export async function DELETE(request: Request) {
+export async function DELETE(req: NextRequest) {
   try {
-    const { deleteId } = await request.json();
-
-    if (!deleteId) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
-    }
-
-    await query("DELETE FROM events WHERE id = $1", [deleteId]);
-    return NextResponse.json({ message: "Event deleted successfully" });
-  } catch (error: any) {
-    console.error("Error deleting event:", error);
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    const id = req.nextUrl.searchParams.get('id');
+    const client = getNeonClient();
+    await client('DELETE FROM events WHERE id = $1', [id]);
+    return NextResponse.json({ message: `Evento com id ${id} excluído com sucesso.` });
+  } catch (error) {
+    return NextResponse.json({ error: 'Erro ao excluir evento.' }, { status: 500 });
   }
 }
