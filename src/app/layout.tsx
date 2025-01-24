@@ -1,15 +1,11 @@
-// app/layout.tsx
 import { ReactNode } from 'react';
 import '@/app/styles/globals.css';
 import ThemeToggle from '@/components/ToggleTheme';
 import Footer from '@/components/Footer';
-import Sidebar from '@/components/Sidebar';
 import Navbar from '@/components/Navbar';
-import { Metadata, Viewport} from 'next';
-import { Analytics } from '@vercel/analytics/next';
-import { SpeedInsights } from "@vercel/speed-insights/next"
-
-
+import { Metadata } from 'next';
+import Analytics from '@/components/Ads/Analytics';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://caminhodavida.vercel.app/'),
@@ -42,27 +38,35 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-}
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br" data-theme="dark">
       <head>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+        {/* Google Analytics */}
+        <Analytics />
+        {/* Google Fonts */}
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+        />
         <link rel="icon" href="/favicon/favicon.ico" type="image/x-icon" />
         <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
         <link rel="manifest" href="/favicon/site.webmanifest" />
       </head>
       <body>
-        <ThemeToggle />
+        {/* Barra de Navegação */}
         <Navbar />
+        {/* Conteúdo Principal */}
         <main>{children}</main>
+        {/* Controle de Tema */}
+        <ThemeToggle />
+        {/* Rodapé */}
         <Footer />
-        <Analytics />
+        {/* Métricas de Velocidade */}
         <SpeedInsights />
       </body>
     </html>
