@@ -1,118 +1,169 @@
-'use client';
-import React, { useState } from 'react';
+"use client";
 
-type MembershipIntent = {
+import { useState, useEffect } from "react";
+
+interface MembershipRequest {
   id: number;
   name: string;
   contact: string;
   intention: string;
   isForDiscipleship: boolean;
-};
+  created_at: string;
+}
 
-const MembershipIntentForm: React.FC = () => {
-  const [membershipIntents, setMembershipIntents] = useState<MembershipIntent[]>([]);
+export default function MembershipForm() {
   const [formData, setFormData] = useState({
-    name: '',
-    contact: '',
-    intention: '',
+    name: "",
+    contact: "",
+    intention: "Discipulado", // Valor inicial do select
     isForDiscipleship: false,
   });
+  const [requests, setRequests] = useState<MembershipRequest[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Carregar os pedidos existentes ao carregar a página
+  useEffect(() => {
+    const fetchRequests = async () => {
+      setLoading(true);
+      try {
+        const res = await fetch("/api/membership");
+        if (res.ok) {
+          const data = await res.json();
+          setRequests(data);
+        } else {
+          setError("Erro ao carregar os pedidos.");
+        }
+      } catch (err) {
+        setError("Erro ao carregar os pedidos.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchRequests();
+  }, []);
+
+  // Atualizar campos do formulário
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value, type, checked } = e.target as HTMLInputElement;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  // Enviar formulário
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const newIntent: MembershipIntent = {
-      id: Date.now(),
-      name: formData.name,
-      contact: formData.contact,
-      intention: formData.intention,
-      isForDiscipleship: formData.isForDiscipleship,
-    };
+    if (!formData.name || !formData.contact || !formData.intention) {
+      setError("Todos os campos são obrigatórios.");
+      return;
+    }
 
-    setMembershipIntents([...membershipIntents, newIntent]);
-    setFormData({ name: '', contact: '', intention: '', isForDiscipleship: false });
+    try {
+      const res = await fetch("/api/membership", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (res.ok) {
+        const newRequest = await res.json();
+        setRequests((prev) => [newRequest, ...prev]);
+        setFormData({ name: "", contact: "", intention: "Discipulado", isForDiscipleship: false });
+        setError(null);
+      } else {
+        setError("Erro ao enviar o pedido.");
+      }
+    } catch (err) {
+      setError("Erro ao enviar o pedido.");
+    }
   };
 
   return (
-    <section className="p-6 flex flex-col gap-6">
-      {/* Formulário */}
-      <form onSubmit={handleSubmit} className="bg-base-100 shadow-md rounded-box p-6">
-        <h2 className="text-xl font-bold mb-4">Pedido de Intenção para Ser Membro</h2>
+    <div className="p-4">
+      <h1 className="text-3xl font-bold mb-4">Pedido de Intenção de Membro</h1>
 
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Seu Nome</span>
-          </label>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="label">Nome</label>
           <input
             type="text"
-            placeholder="Digite seu nome"
-            className="input input-bordered"
+            name="name"
             value={formData.name}
-            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
           />
         </div>
-
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Contato</span>
-          </label>
+        <div>
+          <label className="label">Contato</label>
           <input
             type="text"
-            placeholder="Digite seu telefone ou e-mail"
-            className="input input-bordered"
+            name="contact"
             value={formData.contact}
-            onChange={(e) => setFormData({ ...formData, contact: e.target.value })}
+            onChange={handleChange}
+            className="input input-bordered w-full"
+            required
           />
         </div>
-
-        <div className="form-control mb-4">
-          <label className="label">
-            <span className="label-text">Intenção</span>
-          </label>
-          <textarea
-            placeholder="Descreva sua intenção (ex.: discipulado, integração, etc.)"
-            className="textarea textarea-bordered"
+        <div>
+          <label className="label">Intenção</label>
+          <select
+            name="intention"
             value={formData.intention}
-            onChange={(e) => setFormData({ ...formData, intention: e.target.value })}
-          ></textarea>
+            onChange={handleChange}
+            className="select select-bordered w-full"
+            required
+          >
+            <option value="Discipulado">Discipulado</option>
+            <option value="Discipulado Online">Discipulado Online</option>
+            <option value="Discipulado Familiar">Discipulado Familiar</option>
+            <option value="Integração Online">Integração Online</option>
+            <option value="Integração Familiar">Integração Familiar</option>
+            <option value="Integração">Integração</option>
+            <option value="Acompanhamento Espiritual">Acompanhamento Espiritual</option>
+          </select>
         </div>
-
-        <div className="form-control mb-4">
+        <div>
           <label className="label cursor-pointer">
-            <span className="label-text">Deseja participar do discipulado?</span>
+            <span>É para discipulado?</span>
             <input
               type="checkbox"
-              className="checkbox"
+              name="isForDiscipleship"
               checked={formData.isForDiscipleship}
-              onChange={(e) => setFormData({ ...formData, isForDiscipleship: e.target.checked })}
+              onChange={handleChange}
+              className="checkbox checkbox-primary ml-2"
             />
           </label>
         </div>
-
-        <button type="submit" className="btn btn-primary w-full">Enviar Pedido</button>
+        <button type="submit" className="btn btn-primary w-full">Enviar</button>
       </form>
 
-      {/* Mural de Intenções */}
-      <div className="bg-base-200 shadow-md rounded-box p-6">
-        <h2 className="text-xl font-bold mb-4">Pedidos de Intenção</h2>
+      {error && <p className="text-red-500 mt-4">{error}</p>}
 
-        {membershipIntents.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {membershipIntents.map((intent) => (
-              <div key={intent.id} className="card bg-base-100 shadow-sm p-4">
-                <h3 className="font-bold text-lg mb-2">{intent.name}</h3>
-                <p><strong>Contato:</strong> {intent.contact}</p>
-                <p><strong>Intenção:</strong> {intent.intention}</p>
-                {intent.isForDiscipleship && <p className="text-primary font-semibold">Participará do discipulado</p>}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center">Nenhum pedido de intenção enviado no momento.</p>
-        )}
-      </div>
-    </section>
+      <hr className="my-8" />
+
+      <h2 className="text-2xl font-semibold mb-4">Pedidos Enviados</h2>
+
+      {loading ? (
+        <p>Carregando...</p>
+      ) : (
+        <ul>
+          {requests.map((request) => (
+            <li key={request.id} className="border-b py-2">
+              <p><strong>Nome:</strong> {request.name}</p>
+              <p><strong>Contato:</strong> {request.contact}</p>
+              <p><strong>Intenção:</strong> {request.intention}</p>
+              <p><strong>Discipulado:</strong> {request.isForDiscipleship ? "Sim" : "Não"}</p>
+              <p><strong>Enviado em:</strong> {new Date(request.created_at).toLocaleString()}</p>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
-};
-
-export default MembershipIntentForm;
+}

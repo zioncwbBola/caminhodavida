@@ -13,12 +13,11 @@ model User {
   email     String   @unique
   createdAt DateTime @default(now())
 }
-model UserLgpd {
-  id        String   @id @default(cuid()) // Identificador único
-  name      String?  // Nome do usuário
-  email     String   @unique // Email único do usuário
-  consent   Boolean  @default(false) // Registro de consentimento do usuário
-  createdAt DateTime @default(now()) // Data de criação do registro
-  updatedAt DateTime @updatedAt // Data de última atualização
-  deletedAt DateTime? // Soft delete: data de exclusão lógica
+model MembershipIntent {
+  id               Int      @id @default(autoincrement())
+  name             String
+  contact          String
+  intention        String
+  isForDiscipleship Boolean
+  createdAt        DateTime @default(now())
 }
