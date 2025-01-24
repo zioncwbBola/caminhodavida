@@ -10,22 +10,39 @@ import ConsentBanner from '@/components/termos/Lgpd';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://caminhodavida.vercel.app/'),
-  title: 'Caminho da Vida',
-  description: 'Bem-vindo ao Caminho da Vida',
-  keywords: ['Caminho da Vida', 'chat', 'comunidade'],
-  authors: [{ name: 'Seu Nome' }],
+  title: 'Caminho da Vida - Igreja Evangélica',
+  description: 'Somos a Comunidade Cristã Caminho da Vida, uma igreja evangélica dedicada a demonstrar o amor de Cristo em todas as ações, oferecer apoio emocional, servir ao próximo e compartilhar a mensagem de salvação de Jesus Cristo.',
+  keywords: [
+    'Caminho da Vida',
+    'Igreja Evangélica',
+    'Comunidade Cristã',
+    'apoio emocional',
+    'fé',
+    'amor de Cristo',
+    'mensagem de salvação',
+    'cultos online',
+    'ajuda espiritual',
+  ],
+  authors: [{ name: 'Comunidade Cristã Caminho da Vida' }],
   robots: 'index, follow',
   openGraph: {
     siteName: 'Caminho da Vida',
-    title: 'Caminho da Vida',
-    description: 'Bem-vindo ao Caminho da Vida',
+    title: 'Caminho da Vida - Igreja Evangélica',
+    description: 'Descubra o amor de Cristo, encontre apoio emocional e viva a mensagem de salvação. Faça parte da Comunidade Cristã Caminho da Vida!',
     url: 'https://caminhodavida.vercel.app/',
+    type: 'website',
     images: [
       {
         url: '/brand/300px.png',
         width: 800,
         height: 600,
-        alt: 'Caminho da Vida Logo',
+        alt: 'Caminho da Vida - Igreja Evangélica',
+      },
+      {
+        url: '/brand/support.png',
+        width: 800,
+        height: 600,
+        alt: 'Apoio Emocional e Amor de Cristo',
       },
     ],
   },
@@ -38,6 +55,7 @@ export const metadata: Metadata = {
     'google-site-verification': 'f7z7Q-Fme5-I-gy1j0k16sszIaSx8CTDcsxgVWRqKxs',
   },
 };
+
 
 
 export default function RootLayout({ children }: { children: ReactNode }) {
