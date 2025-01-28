@@ -1,7 +1,9 @@
+# *
 User-agent: *
 Allow: /
-Sitemap: https://caminhodavida.vercel.app/sitemap.xml
-
 
 # Host
 Host: https://caminhodavida.vercel.app
+
+# Sitemaps
+Sitemap: https://caminhodavida.vercel.app/sitemap.xml

@@ -3,7 +3,7 @@ module.exports = {
   siteUrl: 'https://caminhodavida.vercel.app',
   exclude: ['/icon.svg', '/apple-icon.png', '/manifest.webmanifest', '/tags/*'],
   generateRobotsTxt: true,
-  generateIndexSitemap: false,
+  generateIndexSitemap: true,
   robotsTxtOptions: {
       policies: [
           {
