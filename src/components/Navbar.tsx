@@ -56,6 +56,9 @@ const Navbar = () => {
             <a href="/events/" className="text-lg font-bold hover:text-accent hover:border-b-2 py-2 border-accent transition-all duration-300" > Programação </a>
           </li>
           <li>
+            <a href="/midia/" className="text-lg font-bold hover:text-accent hover:border-b-2 py-2 border-accent transition-all duration-300" > Culto Ao Vivo </a>
+          </li>
+          <li>
             <a href="/ministerios/" className="text-lg font-bold hover:text-accent hover:border-b-2 py-2 border-accent transition-all duration-300" > Ministérios </a>
           </li>
           <li>
