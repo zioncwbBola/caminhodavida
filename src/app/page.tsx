@@ -7,9 +7,12 @@ import MinistriesSection from '@/components/modelo/Ministerios';
 import Testimonials from '@/components/modelo/Testimonials';
 import Banner from '@/components/modelo/Banner';
 import { useState } from 'react';
+import LiveAlert from '@/components/HomePage/LiveAlert';
 
 const HomePage = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const isLive = true; // Substitua pela lógica para determinar se o canal está ao vivo
+
 
   const handleScroll = (role: string) => {
     const element = document.querySelector(`[role="${role}"]`);
@@ -94,7 +97,7 @@ const HomePage = () => {
           </form>
         </div>
       )}
-
+      
       {/* Conteúdo principal */}
       <div className="py-5" role="slider"></div>
       <Hero />

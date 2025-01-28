@@ -1,7 +1,7 @@
 'use client';
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import { Offcanvas, Button } from "@/components/ui/PlayList";
+import LiveAlert from "@/components/HomePage/LiveAlert"; // Importe o LiveAlert aqui
 
 const MidiaPage: React.FC = () => {
   const [isLive, setIsLive] = useState(true); // Simula se está ao vivo
@@ -11,27 +11,39 @@ const MidiaPage: React.FC = () => {
     { id: 2, title: "Video 2", isPlaying: false },
     { id: 3, title: "Video 3", isPlaying: false },
   ]);
-
+  
   const handlePlay = (id: number) => {
     setPlaylist((prev) =>
       prev.map((video) => ({ ...video, isPlaying: video.id === id }))
     );
   };
 
+  const streamUrl = "https://www.youtube.com/embed/2FpTVnLWHZI"; // URL do vídeo do YouTube
+
   return (
     <main className="flex flex-col items-center justify-center min-h-screen p-4 bg-base-100">
       {/* Header */}
       <h1 className="text-3xl font-bold text-center text-primary">Cultos AO Vivo</h1>
 
+      {/* Alerta de transmissão ao vivo */}
+      <LiveAlert 
+        isLive={isLive} 
+        streamUrl={streamUrl} 
+      />
+
       {/* Live Stream or Offline Message */}
       <div className="w-full max-w-5xl aspect-video bg-base-200 rounded-xl shadow-md mt-6 flex items-center justify-center">
         {isLive ? (
-          <video
-            src="/path-to-live-stream"
-            className="w-full h-full rounded-xl"
-            controls
-            autoPlay
-          />
+          <iframe
+            width="100%"
+            height="315"
+            src={streamUrl}
+            title="YouTube video player"
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
+          ></iframe>
         ) : (
           <div className="text-center">
             <p className="text-xl font-semibold text-error">Estamos Offline no momento.</p>
