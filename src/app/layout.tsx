@@ -109,7 +109,7 @@ import ConsentBanner from "@/components/termos/Lgpd"
 import GTag from "@/components/Ads/Gtag"
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://caminhodavida.vercel.app/"),
+  metadataBase: new URL("https://caminhodavida.vercel.app"),
   title: "Caminho da Vida - Igreja Evangélica",
   description:
     "Somos a Comunidade Cristã Caminho da Vida, uma igreja evangélica dedicada a demonstrar o amor de Cristo em todas as ações, oferecer apoio emocional, servir ao próximo e compartilhar a mensagem de salvação de Jesus Cristo.",
@@ -123,6 +123,12 @@ export const metadata: Metadata = {
     "mensagem de salvação",
     "cultos online",
     "ajuda espiritual",
+    "Igreja Pastor Ivan Rosa",
+    "Devocionais e estudos bíblicos online",
+    "Agenda de cultos e eventos cristãos",
+    "Transmissão de cultos ao vivo",
+    "Recursos cristãos digitais para comunidades",
+    "Ensinos bíblicos organizados por ministérios"
   ],
   authors: [{ name: "Comunidade Cristã Caminho da Vida" }],
   robots: {
